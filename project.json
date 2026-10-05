@@ -1,0 +1,19 @@
+{
+  "overview": "A mobile-first pepper-farming companion that guides growers through lessons and tracks crops, harvests, sales, and profit.",
+  "features": [
+    "Onboarding and Internet Identity sign-in",
+    "Farm dashboard with crop summary and quick actions",
+    "Crop selection and step-by-step lessons with progress",
+    "Log harvests and sales, and view computed profit",
+    "Profile and sign-out"
+  ],
+  "category": "productivity",
+  "tags": [
+    "farming",
+    "agriculture",
+    "learning",
+    "tracking",
+    "mobile-first"
+  ],
+  "last_updated": "2026-10-05T14:39:31.634Z"
+}

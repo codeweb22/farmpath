@@ -1,0 +1,140 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type ActivityId__326478791 = Nat;
+type ActivityId__470396719 = ActivityId__326478791;
+type ActivityId__927327416 = Nat;
+type ActivityKind__1009031778 = {#cost; #harvest; #sale};
+type ActivityKind__170933904 = {#cost; #harvest; #sale};
+type Activity__42349354 =
+  {
+    amount : Nat;
+    createdAt : Timestamp__828533318;
+    cropId : CropId__115972973;
+    date : Nat;
+    id : ActivityId__927327416;
+    kind : ActivityKind__1009031778;
+    note : ?Text;
+    owner : Principal;
+    quantity : Nat;
+    unit : Text
+  };
+type Activity__491599549 =
+  {
+    amount : Nat;
+    createdAt : Timestamp__909068063;
+    cropId : CropId__831996294;
+    date : Nat;
+    id : ActivityId__470396719;
+    kind : ActivityKind__170933904;
+    note : ?Text;
+    owner : Principal;
+    quantity : Nat;
+    unit : Text
+  };
+type CropId__115972973 = Nat;
+type CropId__413369060 = Nat;
+type CropId__831996294 = CropId__413369060;
+type Crop__237710619 =
+  {description : Text; id : CropId__115972973; name : Text; photoUrl : Text};
+type Crop__525936324 =
+  {description : Text; id : CropId__831996294; name : Text; photoUrl : Text};
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type LessonId__21783266 = Nat;
+type LessonId__219527843 = Nat;
+type LessonId__261721280 = LessonId__21783266;
+type LessonProgress__222079833 =
+  {
+    completedAt : Timestamp__828533318;
+    cropId : CropId__115972973;
+    lessonId : LessonId__219527843;
+    owner : Principal
+  };
+type LessonProgress__261445615 =
+  {
+    completedAt : Timestamp__909068063;
+    cropId : CropId__831996294;
+    lessonId : LessonId__261721280;
+    owner : Principal
+  };
+type Lesson__508233419 =
+  {
+    cropId : CropId__831996294;
+    description : Text;
+    id : LessonId__261721280;
+    order : Nat;
+    title : Text;
+    videoUrl : Text
+  };
+type Lesson__800707354 =
+  {
+    cropId : CropId__115972973;
+    description : Text;
+    id : LessonId__219527843;
+    order : Nat;
+    title : Text;
+    videoUrl : Text
+  };
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__311590964 =
+  {
+    accessControlState : AccessControlState__201339279;
+    activities : Map__230067015<ActivityId__927327416, Activity__42349354>;
+    crops : Map__230067015<CropId__115972973, Crop__237710619>;
+    lessons : Map__230067015<LessonId__219527843, Lesson__800707354>;
+    progress :
+      Map__230067015<(Principal, LessonId__219527843),
+                      LessonProgress__222079833>;
+    state : {var nextActivityId : Nat; var nextCropId : Nat}
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__453222978 = {};
+type Timestamp__301639476 = Int;
+type Timestamp__828533318 = Int;
+type Timestamp__909068063 = Timestamp__301639476;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20261005_120000" : OldActor__453222978 -> NewActor__311590964
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable activities :
+    {
+      var root : Node__204828119<ActivityId__470396719, Activity__491599549>;
+      var size : Nat__227979830
+    };
+  stable crops :
+    {
+      var root : Node__204828119<CropId__831996294, Crop__525936324>;
+      var size : Nat__227979830
+    };
+  stable lessons :
+    {
+      var root : Node__204828119<LessonId__261721280, Lesson__508233419>;
+      var size : Nat__227979830
+    };
+  stable progress :
+    {
+      var root :
+        Node__204828119<(Principal, LessonId__261721280),
+                         LessonProgress__261445615>;
+      var size : Nat__227979830
+    };
+  stable state : {var nextActivityId : Nat; var nextCropId : Nat}
+};

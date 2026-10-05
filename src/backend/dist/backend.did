@@ -1,0 +1,168 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = int;
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ProgressSummary = 
+ record {
+   completedLessons: nat;
+   crops: vec CropView;
+   totalLessons: nat;
+ };
+type ProfitSummary = 
+ record {
+   byCrop: vec CropProfit;
+   totalCost: nat;
+   totalIncome: nat;
+   totalProfit: int;
+ };
+type LessonView = 
+ record {
+   completed: bool;
+   cropId: CropId;
+   description: text;
+   id: LessonId;
+   order: nat;
+   title: text;
+   videoUrl: text;
+ };
+type LessonId = nat;
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type DashboardSummary = 
+ record {
+   activeCrops: nat;
+   hasData: bool;
+   recentActivity: vec ActivityView;
+   upcomingTasks: nat;
+ };
+type CropView = 
+ record {
+   completedCount: nat;
+   description: text;
+   id: CropId;
+   lessonCount: nat;
+   name: text;
+   photoUrl: text;
+ };
+type CropProfit = 
+ record {
+   cost: nat;
+   cropId: CropId;
+   cropName: text;
+   income: nat;
+   profit: int;
+ };
+type CropInput = 
+ record {
+   description: text;
+   name: text;
+   photoUrl: text;
+ };
+type CropId = nat;
+type CropDetail = 
+ record {
+   crop: CropView;
+   lessons: vec LessonView;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type ActivityView = 
+ record {
+   amount: nat;
+   createdAt: Timestamp;
+   cropId: CropId;
+   cropName: text;
+   date: nat;
+   id: ActivityId;
+   kind: ActivityKind;
+   note: opt text;
+   quantity: nat;
+   unit: text;
+ };
+type ActivityKind = 
+ variant {
+   cost;
+   harvest;
+   sale;
+ };
+type ActivityInput = 
+ record {
+   amount: nat;
+   cropId: CropId;
+   date: nat;
+   kind: ActivityKind;
+   note: opt text;
+   quantity: nat;
+   unit: text;
+ };
+type ActivityId = nat;
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  addCrop: (input: CropInput) -> (CropView);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  completeLesson: (lessonId: LessonId) -> (opt CropView);
+  dashboardSummary: () -> (DashboardSummary) query;
+  deleteActivity: (id: ActivityId) -> (bool);
+  execute: (qJson: text) -> (Result) query;
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCrop: (id: CropId) -> (opt CropDetail) query;
+  isCallerAdmin: () -> (bool) query;
+  listActivities: (cropFilter: opt CropId, kindFilter: opt ActivityKind) ->
+   (vec ActivityView) query;
+  listCrops: () -> (vec CropView) query;
+  logActivity: (input: ActivityInput) -> (ActivityView);
+  profitSummary: () -> (ProfitSummary) query;
+  progressSummary: () -> (ProgressSummary) query;
+  schema: () -> (text) query;
+  uncompleteLesson: (lessonId: LessonId) -> (opt CropView);
+  updateActivity: (id: ActivityId, input: ActivityInput) ->
+   (opt ActivityView);
+}

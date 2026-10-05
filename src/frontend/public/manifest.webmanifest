@@ -1,0 +1,19 @@
+{
+  "name": "FarmPath — Pepper Farming Journey",
+  "short_name": "FarmPath",
+  "description": "FarmPath guides pepper farmers from nursery bed to market with lessons, harvest tracking and real profit insights.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7faf7",
+  "theme_color": "#14532d",
+  "icons": [
+    {
+      "src": "/assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
